@@ -133,8 +133,8 @@ nest g library kafka
 
 Install microservices and kafka packages
 ```bash
-npm install –-save @nestjs/microservices
-npm install --save kafkajs
+npm install @nestjs/microservices
+npm install kafkajs
 ```
 
 Api-gateway is Producer and product app is consumer
