@@ -93,6 +93,76 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
+## Project setup and execution steps:
+
+Install kafka:
+https://github.com/obsidiandynamics/kafdrop/blob/master/docker-compose/kafka-kafdrop/docker-compose.yaml
+Checkout project
+```bash
+Run docker desktop
+Cd to kafka-kafdrop 
+Docker compose up
+```
+
+View Kafka UI: http://localhost:9000/
+
+Install nest packages
+```bash
+npm install -g @nestjs/cli
+```
+
+Create new project
+```bash
+nest new microservices-kafka-nest
+cd microservices-kafka-nest
+```
+
+Create microservices as monorepo apps
+```bash
+nest generate app product
+nest generate app order
+nest generate app payment
+nest generate app api-gateway
+```
+
+Generate library
+```bash
+nest g library common
+nest g library kafka
+```
+
+Install microservices and kafka packages
+```bash
+npm install –-save @nestjs/microservices
+npm install --save kafkajs
+```
+
+Api-gateway is Producer and product app is consumer
+Generate controller, service inside api-gateway (it will ask to choose)
+nest generate controller product-producer
+✔ Which project would you like to generate to? api-gateway
+nest generate service product-producer
+✔ Which project would you like to generate to? api-gateway
+
+
+Start product apps
+```bash
+npm run start:dev api-gatweay
+npm run start:dev product
+```
+
+POST request via postman http://localhost:3000/products
+Output:
+```bash
+{
+   "message": "Product created and event sent to Kafka",
+   "product": {
+       "id": 1,
+       "name": "Sample Product",
+       "price": 19.99
+   }
+}
+```
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
